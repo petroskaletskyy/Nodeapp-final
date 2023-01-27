@@ -1,19 +1,30 @@
-ARG ARCH=
-ARG IMAGE_BASE=16-alpine
+FROM node:alpine
 
-FROM ${ARCH}node:$IMAGE_BASE
-LABEL Name="Node.js Demo App" Version=4.8.5
-LABEL org.opencontainers.image.source = "https://github.com/benc-uk/nodejs-demoapp"
-ENV NODE_ENV production
-WORKDIR /app 
+LABEL Petro Skaletskyy
+LABEL Final Task
 
-# For Docker layer caching do this BEFORE copying in rest of app
+WORKDIR /usr/src/app 
+
+#Copy package.json for installing dependencies 
 COPY src/package*.json ./
-RUN npm install --production --silent
 
-# NPM is done, now copy in the rest of the project to the workdir
+#Install NodeJS dependencies
+RUN npm install
+
+#Install nginx
+RUN apk update \
+    && apk add nginx --no-cache \
+    && apk add openrc --no-cache \
+    && rm -rf /var/cache/apk/*
+
+#Copy NodeJS project
 COPY src/. .
 
-# Port 3000 for our Express server 
+#Make sure the nginx starts when system reboots
+RUN rc-update add nginx default
+
+COPY build/default.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 3000
+
 ENTRYPOINT ["npm", "start"]
