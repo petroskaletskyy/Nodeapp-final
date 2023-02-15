@@ -6,7 +6,7 @@ LABEL Final Task
 WORKDIR /usr/src/app 
 
 #Copy package.json for installing dependencies 
-COPY ../src/package*.json .
+COPY src/package*.json .
 
 #Install NodeJS dependencies
 RUN npm install
@@ -18,7 +18,7 @@ RUN apk update \
     && rm -rf /var/cache/apk/*
 
 #Copy NodeJS project
-COPY ../src/. .
+COPY src/. .
 
 #Make sure the nginx starts when system reboots
 RUN rc-update add nginx default
