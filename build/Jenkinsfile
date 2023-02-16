@@ -11,9 +11,9 @@ pipeline{
     stages{
         stage('Cloning Git') {
             steps {
-                git (branch: 'main', 
+                git (branch: 'master', 
                 url: 'git@github.com:petroskaletskyy/Nodeapp-final.git',
-                credentialsId: 'petroskaletskyy-GitHub-key')
+                credentialsId: 'github')
             }
         }
         stage ('Build Docker image') {
