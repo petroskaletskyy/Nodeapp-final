@@ -10,5 +10,4 @@ secrets.sh
 myparams.json
 .terraform
 .terraform.lock.hcl
-*.tfvars
 commands.txt
