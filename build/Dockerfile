@@ -28,7 +28,7 @@ RUN rc-update add nginx default
 
 #Create script for starting nginx in container
 COPY ./script.sh ./
-RUN cnmod +x ./script.sh
+RUN chmod +x ./script.sh
 
 EXPOSE 3000
 
