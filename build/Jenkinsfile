@@ -13,7 +13,7 @@ pipeline{
             steps {
                 git (branch: 'master', 
                 url: 'git@github.com:petroskaletskyy/Nodeapp-final.git',
-                credentialsId: 'github')
+                credentialsId: 'petroskaletskyy-GitHub-key')
             }
         }
         stage ('Build Docker image') {
