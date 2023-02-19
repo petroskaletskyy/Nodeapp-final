@@ -12,3 +12,5 @@ myparams.json
 .terraform.lock.hcl
 state.tfplan
 commands.txt
+terraform.tfstate
+terraform.tfstate.backup
