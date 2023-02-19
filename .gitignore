@@ -10,4 +10,5 @@ secrets.sh
 myparams.json
 .terraform
 .terraform.lock.hcl
+state.tfplan
 commands.txt
