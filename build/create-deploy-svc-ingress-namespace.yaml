@@ -123,7 +123,7 @@ metadata:
   labels:
     app: nodejs-app-1
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: nodejs-app-1
   ports:
@@ -139,7 +139,7 @@ metadata:
   labels:
     app: nodejs-app-2
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: nodejs-app-2
   ports:
@@ -155,7 +155,7 @@ metadata:
   labels:
     app: nodejs-app-3
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: nodejs-app-3
   ports:
@@ -171,7 +171,7 @@ metadata:
   labels:
     app: nodejs-app-4
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: nodejs-app-4
   ports:

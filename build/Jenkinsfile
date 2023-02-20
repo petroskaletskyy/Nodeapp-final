@@ -43,8 +43,10 @@ pipeline{
         }    
         stage('Apply to k8s cluster') {
             steps {
-                sh 'kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.6.4/deploy/static/provider/aws/deploy.yaml'
-                sh 'kubectl apply -f ./build/create-deploy-svc-ingress-namespace.yaml'
+                withAWS(credentials: 'aws-terraform-user') {
+                    sh 'kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.6.4/deploy/static/provider/aws/deploy.yaml'
+                    sh 'kubectl apply -f ./build/create-deploy-svc-ingress-namespace.yaml'
+                }
             }
         }
     }
