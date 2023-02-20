@@ -1,9 +1,11 @@
 pipeline{
 
     environment {
-        imagename = "pskaletskyy/nodeapp-final"
-        registryCredential = 'DockerHub'
-        dockerImage = "pskaletskyy/nodeapp-final:latest"
+        imagename           = "pskaletskyy/nodeapp-final"
+        registryCredential  = 'DockerHub'
+        dockerImage         = "pskaletskyy/nodeapp-final:latest"
+        AWS_REGION          = "eu-west-1"
+        EKS_CLUSTER_NAME    = "nodeapp-final-cluster"
     }
 
     agent any
@@ -30,6 +32,19 @@ pipeline{
                         dockerImage.push()
                     }    
                 }
+            }
+        }
+        stage('Update kubeconfig') {
+            steps {
+                withAWS(credentials: 'aws-terraform-user') {
+                sh 'aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME}'
+                }
+            }
+        }    
+        stage('Apply to k8s cluster') {
+            steps {
+                sh 'kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.6.4/deploy/static/provider/aws/deploy.yaml'
+                sh 'kubectl apply -f ./build/create-deploy-svc-ingress-namespace.yaml'
             }
         }
     }
