@@ -1,9 +1,11 @@
-FROM node:alpine3.16
+FROM alpine
 
 LABEL Petro Skaletskyy
 LABEL Final Task
 
 WORKDIR /usr/src/app
+
+RUN apk add --update nodejs npm
 
 #Copy package.json for installing dependencies 
 COPY src/package*.json ./
