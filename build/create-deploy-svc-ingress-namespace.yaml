@@ -192,7 +192,7 @@ spec:
     - host: nodeapp-final.app1
       http:
         paths:
-          - path: "/"
+          - path: /(.*)
             pathType: Prefix
             backend:
               service:
@@ -202,8 +202,8 @@ spec:
     - host: nodeapp-final.app2
       http:
         paths:
-          - path: "/"
-            pathType: Prefix
+          - pathType: Prefix
+            path: /(.*)
             backend:
               service:
                 name: nodejs-app-2-service
@@ -212,8 +212,8 @@ spec:
     - host: nodeapp-final.app3
       http:
         paths:
-          - path: "/"
-            pathType: Prefix
+          - pathType: Prefix
+            path: /(.*)
             backend:
               service:
                 name: nodejs-app-3-service
@@ -222,10 +222,10 @@ spec:
     - host: nodeapp-final.app4
       http:
         paths:
-          - path: "/"
-            pathType: Prefix
+          - pathType: Prefix
+            path: /(.*)
             backend:
               service:
                 name: nodejs-app-4-service
                 port:
-                  number: 80              
+                  number: 80          

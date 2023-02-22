@@ -1,0 +1,48 @@
+pipeline{
+    
+    agent any
+    tools {
+        terraform 'jenkins-terraform'
+    }
+    
+    stages{
+        stage('Git Checkout'){
+            steps{
+                echo '========================Starting Git Checkout======================='
+                git credentialsId: 'petroskaletskyy-GitHub-key', url: 'git@github.com:petroskaletskyy/Nodeapp-final.git'
+                echo '========================Finishing Git Checkout======================='
+            }
+        }
+        stage('Terraform init'){
+            steps{
+                withAWS(credentials: 'aws-terraform-user') {
+                    echo '============================Starting Terraform init============================'
+                    sh '''terraform init'''
+                    echo '============================Finishing Terraform init============================'
+                }        
+            }
+        }
+        stage('Terraform ${action}'){
+            steps{
+                echo "============================Starting Terraform ${action}================================"
+                withAWS(credentials: 'aws-terraform-user') {
+                    script{
+                        if (env.action=='plan'){
+                            echo "Terraform action is --> ${action}"
+                            sh ('terraform ${action} -out state.tfplan -var-file=secrets.tfvars')
+                        }
+                        if (env.action=='apply') {
+                            echo "Terraform action is --> ${action}"
+                            sh ('terraform ${action} -auto-approve state.tfplan')
+                        }
+                        if (env.action=='destroy') {
+                            echo "Terraform action is --> ${action}"
+                            sh ('terraform ${action} -auto-approve -var-file=secrets.tfvars')
+                            }
+                    }
+                }
+                echo "============================Finishing Terraform ${action}================================"
+            }
+        }
+    }
+}
