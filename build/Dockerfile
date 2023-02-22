@@ -30,6 +30,8 @@ RUN rc-update add nginx default
 COPY ./script.sh ./
 RUN chmod +x ./script.sh
 
+VOLUME [ “/sys/fs/cgroup” ]
+
 EXPOSE 3000
 
 ENTRYPOINT ["./script.sh"]
