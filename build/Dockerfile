@@ -1,4 +1,4 @@
-FROM ngnix:alpine
+FROM nginx:alpine
 
 LABEL Petro Skaletskyy
 LABEL Final Task
