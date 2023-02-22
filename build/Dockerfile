@@ -22,4 +22,4 @@ COPY build/default.conf /etc/nginx/http.d/default.conf
 
 EXPOSE 3000
 
-CMD npm run && nginx start
+CMD nginx && npm run start
